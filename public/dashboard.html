@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome, <span id="username">Loading...</span></h1>
+        <nav>
+            <a href="/profile.html">Profile</a>
+            <a href="/login.html">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Game Section</h2>
+        <button id="connectButton">Connect to Game</button>
+        <button id="refreshButton">Refresh Game</button>
+        <canvas id="gameCanvas"></canvas>
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("/session")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        document.getElementById("username").textContent = data.username;
+                        player.name = data.username; // Update the player's name in the game
+                    } else {
+                        window.location.href = "/login";
+                    }
+                });
+        });
+    </script>    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
